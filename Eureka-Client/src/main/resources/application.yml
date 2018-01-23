@@ -1,0 +1,11 @@
+server:
+  port: 8762
+#注明自己的服务注册中心的地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#服务与服务之间相互调用一般都是根据这个name
+spring:
+  application:
+    name: service-hi
