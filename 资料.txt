@@ -1,0 +1,124 @@
+鸟哥的Linux私房菜   
+maven添加第三方jar包：mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon-dom -Dversion=9.0 -Dpackaging=jar -Dfile=/home/ubuntu/saxon-dom-9.0.jar
+maven添加第三方zip包：mvn install:install-file -DgroupId=com.adobe.flex.compiler -DartifactId=asdoc -Dversion=3.2.0.3958 -Dclassifier=template -Dpackaging=zip -Dfile=/home/ubuntu/asdoc-3.2.0.3958-template.zip
+
+http://doc.bigorder.weili.cmpower.cn/dg/zhima/start.html#p=平台货架内容管理（新）
+
+biran@aspirecn.com   然哥邮箱
+http://archive.apache.org/dist/tomcat/ tomcat各种历史版本下载
+
+提交申请加班的项目名称：互联网事业部-应用业务部-移动通讯应用
+百度网盘技术地址：http://pan.baidu.com/mbox/homepage?short=gf5EaFx 
+
+1、质码商城门户原型已由http://doc.bigorder.weili.cmpower.cn/dg/zhima/start.html
+更新成http://doc.bigorder.weili.cmpower.cn/dg/zhima/m/start.html
+2、质码商城商品中心原型
+http://doc.bigorder.weili.cmpower.cn/dg/zhimaproduct/start.html
+3、质码商城货架、订单中心原型
+已由http://doc.bigorder.weili.cmpower.cn/dg/zhima/start.html
+更新成
+http://doc.bigorder.weili.cmpower.cn/dg/zhima/p/start.html
+
+休假超三天
+超过3天的假期需要发给潘总Alex.Pan<alex.pan@my1net.com>
+审批哈
+
+同时cc给这两个邮箱gzhr@my1net.com、gzhr.zw@my1net.com，我cm.zhangyu@aspirecn.com，还有彭丽673424094@139.com。
+
+http://www.szsi.gov.cn/
+查社保网址
+
+http://pan.baidu.com/mbox/homepage?short=jIBDUVO
+分享了j2ee的视频，还有axure的，大家有空看看
+
+1：质码数据库说明文档
+2：质码前端接口文档
+3：质码设计说明文档（成刚为基础）
+4: dubbo服务接口文档
+
+ps账号密码：QQ邮箱/Liuweifeng&123
+svn账号密码： liuweifeng/liuweifeng+888
+eip账号密码： liuweifeng/asp@123
+邮箱账号密码：liuweifeng@aspirecn.com/asp@123
+徐伯坤eip、禅道账号密码：xubaikun/aspire@1234562317
+账号douxiaoyu/0523douxiaoyu
+登入之后的账号douxiaoyu/0523dxy
+Oracle的管理口令：Orcl_123
+
+
+东莞移动商城门户原型：http://doc.bigorder.weili.cmpower.cn/dg/front/start.html
+管理系统原型：http://doc.bigorder.weili.cmpower.cn/dg/back/start.html
+
+提加班要求
+请各位同学今后加班除了eip申请外，要同时邮件报备
+发送给上级领导后同时抄送给gzhr@my1net.com，15920983550@139.com，gzhr.zw@my1net.com
+邮件名称以姓名-加班申请-加班时间为标准，例：张雨-加班申请-11月8日19:00-21:00
+考勤截图给：美盈广深HR (15812424142@139.com | 18825188956@139.com
+); 彭丽 (673424094@139.com); 'HR-杨霞珍.Sunny' <15812424142@139.com>
+gzhr.zw@my1net.com
+主要人为：赵娟
+
+
+线程池技术：http://www.cnblogs.com/exe19/p/5359885.html
+
+https://10.1.64.2/connect/PortalMain
+https://221.179.8.168:18022/
+aspire:aspire201504****
+你先用我的
+上面那个登陆密码：zb.hujie/asp+888
+maven查询地址：http://search.maven.org/
+测试环境 10.1.5.20 用户名 cc_qyw/cc_qyw@123
+
+spring:http://blog.csdn.net/gebitan505/article/details/44455235/
+质码现网：http://123.207.84.119:8181/mportal/login.html
+eip:http://eip.aspirecn.com/default.aspx
+禅道内网：http://10.12.12.254/z/index.php?m=my&f=index
+禅道外网：http://210.75.5.228:8088/z/index.php?m=my&f=index
+东莞移动商城：http://localhost:8080/dgpas/html/src/default.html#/
+电脑报销：开始日期为4月1号
+
+//这是在某字段后面添加字段
+alter table users add isActivate tinyint(1) default 1 comment'是否激活 1：未激活 2：已激活' after userName;
+
+
+请注意请注意，以下有一则通知
+通知：从2017年7月1日开始，收到或开出的所有增值税普通发票，必须都有开具企业全称和纳税人识别号，如缺损就是废票，无法入账。之前有很多同事拿回公司报销的发票抬头是个人名义，但是以后拿回公司报销的发票抬头都要写杭州美盈网络科技有限公司，否则会影响报销的有效性。请大家6月份开始习惯起来，相互提醒，谢谢!
+具体信息如下
+企业全称：杭州美盈网络科技有限公司
+纳税人识别号：913301087996869544
+
+
+你好伙计！我是贝尔格里尔斯，曾服役于英国皇家特种部队，我曾登上珠穆朗玛峰顶，也曾穿越冰冷刺骨的北冰洋。 我将向你展示怎样才能在地球上某些最极端最危险的地方求生，我要面对一个星期的挑战，在那种地方，如果没有适当的求生技能，你连一天也坚持不了。今天我们来到的地方叫编辑部，这里危机四伏，想在这里生存你就要尝试寻找一种少有的动物。嘘 ！快看那，这里有一只落单的小编。小编，富含蛋白质和各种维生素，营养丰富，可以是牛肉的好几倍，这种动物脑满肠肥头脑简单，所以只要大叫一声它们就会吓死。跟我来，我们来尝试捕抓他...嘿 ！瞧，它吓的抽搐了尿了!快快！好的，我们抓住他了！小编在剧烈挣扎！快，掐死他！别让他无聊满嘴喷粪，没错就是这样。
+
+九旬老太为何裸死街头？数百头母驴为何半夜惨叫？小卖部安全套为何屡招黑手？女生宿舍内裤为何频频失窃？连环强奸母猪案，究竟是何人所为？老尼姑的门夜夜被敲，究竟是人是鬼？数百只小母狗意外身亡的背后有隐藏着什么？这一切的背后，是人性的扭曲还是道德的沦丧？是性的爆发还是饥渴的无奈？敬请关注今晚8点CCAV8年度巨献《海娃的不归之路》让我们跟随着镜头走进变态狂的内心世界... ...
+
+//去除数据库重复数据
+DELETE
+FROM
+	T_ORDER A
+WHERE
+	(A.OUT_ORDER_ID) IN (
+		SELECT
+			OUT_ORDER_ID
+		FROM
+			T_ORDER
+		GROUP BY
+			OUT_ORDER_ID
+		HAVING
+			COUNT (*) > 1
+	)
+AND ROWID NOT IN (
+	SELECT
+		MIN (ROWID)
+	FROM
+		T_ORDER
+	GROUP BY
+		OUT_ORDER_ID
+	HAVING
+		COUNT (*) > 1
+)
+spring boot命令启动
+mvn install
+java -jar target\demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
+
+select PM_JOB_SEQUENCE.nextval job_id from (select 1 from all_objects where rownum <= 10) // 查询10条sequence

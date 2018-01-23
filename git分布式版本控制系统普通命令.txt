@@ -1,0 +1,87 @@
+vim命令：i ：修改， :wq//保存并推出，:wa//保存
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+git pull github master --allow-unrelated-histories //可以把远程库的不同数据fetch下来和merge合并。
+ssh-keygen -t rsa -C "136684164@qq.com" //创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key
+cd d:/xxx/xxx/xxx  //找到安装本地仓库的目录
+git config --global color.ui true //让Git显示颜色，会让命令输出看起来更醒目
+git init  //安装本地库git remote set-url github ssh://git@github.com:443/repository
+git add xxx.txt  //添加xxx.txt文件，可以多个添加
+git commit -m "一些注释" //提交到本地仓库，-m的作用是写注释，这个是提交到仓库分支了
+git status //让我们随时掌握仓库的状态
+git diff xxx.txt //查看具体文件的差异,git diff HEAD -- xxx.txt
+git log --pretty=oneline //查看提交日志信息，后面的是显示漂亮的一行,后面可以带具体文件名称，查看提交历史
+git reset --hard HEAD^ //回到上一个版本，HEAD^^^^,代表次数，也可以写成HEAD~4，还有git reset --hard 版本号，是git log出来的
+git reflog //记录你的每一个命令，查看命令历史
+git checkout -- xxx.txt  //可以取消之前的修改，当然这个还没有git add
+git reset HEAD xxx.txt //这个是git add添加到暂存区后的情况，退回到工作区，然后用git checkout -- xxx.txt取消修改
+git rm xxx.txt //删除文件，然后git commit -m "" 提交就行了
+git remote add origin git@github.com:1366841964/repository.git //关联远程github库
+origin //github远程库的默认名字
+git push -u origin master //本地库推送到远程库中，由于远程库是空的，我们第一次推送master分支时，加上了-u参数，
+Git不但会把本地的master分支内容推送的远程新的master分支，
+还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+http://blog.csdn.net/loveuserzzz/article/details/51777631 解决连接github的问题
+git config --local -e //查看本地连接github仓库的设置
+git clone git@github.com:1366841964/repository.git //克隆github远程库的数据到本地仓库
+git checkout -b dev //创建分支，-b参数表示创建并切换，相当于以下两条命令：git branch -c dev，git checkout dev
+git branch -c dev //建立分支
+git checkout dev //切换到dev分支
+git branch //查看所有分支，默认为当前分支,*号的代表当前分支
+git merge dev //合并分支dev到master主分支中，把代码合并
+git branch -d dev //删除分支dev
+git log --graph --pretty=oneline --abbrev-commit //可以看分支的情况
+git merge --no-ff -m "merge with no-ff" dev //合并分支dev到master主分支中，但是禁用了fast forward：快速前进，
+这样会保留删除后的分支信息，因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去
+git stash //藏匿某个分支
+git stash list //查看藏匿分支的信息
+git stash pop //回复分支信息，并且删除藏匿区。
+git stash apply //恢复藏匿分支信息
+git stash drop //删除藏匿区
+git stash apply stash@{0} //可以制定恢复哪个藏匿区信息
+git remote //查看远程库信息
+git remote -v //查看远程库详细信息
+git branch -r //查看远程分支信息git branch -r -d origin/branch-name  ，git push origin :branch-name 删除远程分支
+git pull origin master //从远程github库获取文件，并且merge合并分支
+git push origin master //推送本地git数据到远程github库
+git tag v1.0 //创建v1.0标签
+git tag v0.9 1e4f239 //创建git log --pretty=oneline --abbrev-commit的提交版本1e4f239的标签
+git tag //查看标签
+git show v0.9 //查看标签v0.9的信息
+git tag -a v0.1 -m "version 0.1 released" 5adb681 //用-a指定标签名，-m指定说明文字
+git tag -d v0.1 //删除v0.1标签
+git push origin v1.0//推送本地标签v1.0到远程github
+git push origin --tags //推送所有本地标签到远程github
+git push origin :refs/tags/v0.9 //删除远程github标签，但是前提就是删除本地该标签
+
+Git 全局设置:码云
+
+git config --global user.name "火焰刘"
+git config --global user.email "1366841964@qq.com"
+创建 git 仓库:
+
+mkdir repository
+cd repository
+git init
+touch README.md
+git add README.md
+git commit -m "first commit"
+git remote add origin git@gitee.com:lwf1366841964/repository.git
+git push -u origin master
+已有项目?
+
+cd existing_git_repo
+git remote add origin git@gitee.com:lwf1366841964/repository.git
+git push -u origin master
+git remote rm origin//删除已关联的origin的远程库
+connect to host gitee.com port 22: Connection timed out
+ssh -T -p 443 git@gitee.com //查看本地库与远程库是否连接成功
+.gitignore //建一个这样的文件，里面可以写一些不需要提交的忽略的文件名称，例如：*.db, db.properties
+
+http请求地址和资源文件映射如下:这个是github
+/{application}/{profile}[/{label}]
+/{application}-{profile}.yml
+/{label}/{application}-{profile}.yml
+/{application}-{profile}.properties
+/{label}/{application}-{profile}.properties
+现在访问一般会乱码，但是用yaml后缀的文件不会乱码，但是没有了对应的关系了，只能获取一条数据
