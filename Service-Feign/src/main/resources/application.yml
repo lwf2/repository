@@ -1,0 +1,15 @@
+server:
+  port: 8765
+#注明自己的服务注册中心地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#服务与服务之间调用，一般是用这个name
+spring:
+  application:
+    name: service-feign
+#打开自带断路器hystrix    
+feign: 
+  hystrix: 
+    enabled: true
