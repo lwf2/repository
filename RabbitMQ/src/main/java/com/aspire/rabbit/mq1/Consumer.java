@@ -23,7 +23,7 @@ public class Consumer {
 		Channel channel = connection.createChannel();
 		
 		String queueName = QUEUE_NAME;
-		Producer.XT xt = Producer.XT.DIRECT;
+		Producer.XT xt = Producer.XT.FANOUT;
 		switch(xt) {
 			case DEFAULT:
 				//队列的相关参数需要与第一次定义该队列时相同，否则会出错，使用channel.queueDeclarePassive()可只绑定已有队列，而不创建

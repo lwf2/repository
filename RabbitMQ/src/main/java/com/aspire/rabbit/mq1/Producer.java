@@ -31,7 +31,7 @@ public class Producer {
 		Channel channel = connection.createChannel();//声明消息通道
 		
 		//exchange类型 参考:http://stephansun.iteye.com/blog/1452853
-		XT xt = XT.DIRECT;
+		XT xt = XT.FANOUT;
 		switch(xt) {
 			case DEFAULT: //默认，向指定的队列发送消息，消息只会被一个consumer处理，多个消费者消息会轮训处理，消息发送时如果没有cosumer，消息不会丢失
 				//为消息通道绑定一个队列
