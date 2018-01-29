@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+    <display-name>RabbitMQ</display-name>
+ 
+	<listener>
+		<listener-class>com.aspire.rabbit.extensions.listener.RabbitListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>RabbitCharacterFilter</filter-name>
+		<filter-class>com.aspire.rabbit.extensions.filter.RabbitCharacterFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RabbitCharacterFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<servlet>
+		<description>初始化数据</description>
+		<display-name>RabbitData</display-name>
+		<servlet-name>RabbitData</servlet-name>
+		<servlet-class>com.aspire.rabbit.extensions.servlet.RabbitDataInit</servlet-class>
+		<load-on-startup>1</load-on-startup>	
+	</servlet>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
