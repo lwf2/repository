@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aspire.bpom.dao.OrderDao">
+	<resultMap type="com.aspire.bpom.bean.OrderPO" id="OrderMap">
+		<result property="orderId" column="ORDER_ID" />
+		<result property="orderTime" column="ORDER_TIME" />
+		<result property="requestId" column="REQUEST_ID" />
+		<result property="systemCode" column="SYSTEM_CODE" />
+		<result property="servPltfmCode" column="SERVPLTFM_CODE" />
+		<result property="payWay" column="PAY_WAY" />
+		<result property="payOrganization" column="PAY_ORGANIZATION" />
+		<result property="payType" column="PAY_TYPE" />
+		<result property="ipAddress" column="IP_ADDRESS" />
+		<result property="callbackUrl" column="CALLBACK_URL" />
+		<result property="tradeId" column="TRADE_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="merchantName" column="MERCHANT_NAME" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productDesc" column="PRODUCT_DESC" />
+		<result property="channelId" column="CHANNEL_ID" />
+		<result property="amount" column="AMOUNT" />
+		<result property="reserved1" column="RESERVED1" />
+		<result property="productURL" column="PRODUCT_URL" />
+		<result property="contractCode" column="CONTRACT_CODE" />
+		<result property="wxOpenid" column="WXOPEN_ID" />
+		<result property="payTime" column="PAY_TIME" />
+		<result property="payStatus" column="PAY_STATUS" />
+		<result property="state" column="STATE" />
+		
+	</resultMap>
+	
+		<!-- 保存订单 -->
+	<insert id="inserOrder" parameterType="com.aspire.bpom.bean.OrderPO">
+		insert into
+		t_order(ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,STATE)
+		values(#{orderId},to_date(#{orderTime},'yyyy-mm-dd hh24:mi:ss'),#{requestId,jdbcType=NULL},#{systemCode},#{servPltfmCode},#{payWay},#{payOrganization},
+		#{payType},#{ipAddress},#{callbackUrl,jdbcType=NULL},#{tradeId},#{userId},#{merchantName,jdbcType=NULL},#{productId},
+		#{productName},#{productDesc,jdbcType=NULL},#{channelId,jdbcType=NULL},#{amount},#{reserved1,jdbcType=NULL},#{productURL,jdbcType=NULL}
+		,#{contractCode,jdbcType=NULL},#{wxOpenid,jdbcType=NULL},#{payTime,jdbcType=NULL},#{payStatus,jdbcType=NULL},#{state})
+	</insert>
+	
+		<!-- 保存订单流水 -->
+	<insert id="inserOrderHis" parameterType="com.aspire.bpom.bean.OrderPO">
+		insert into
+		t_order_his(ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,STATE)
+		values(#{orderId},to_date(#{orderTime},'yyyy-mm-dd hh24:mi:ss'),#{requestId,jdbcType=NULL},#{systemCode},#{servPltfmCode},#{payWay},#{payOrganization},
+		#{payType},#{ipAddress},#{callbackUrl,jdbcType=NULL},#{tradeId},#{userId},#{merchantName,jdbcType=NULL},#{productId},
+		#{productName},#{productDesc,jdbcType=NULL},#{channelId,jdbcType=NULL},#{amount},#{reserved1,jdbcType=NULL},#{productURL,jdbcType=NULL}
+		,#{contractCode,jdbcType=NULL},#{wxOpenid,jdbcType=NULL},#{payTime,jdbcType=NULL},#{payStatus,jdbcType=NULL},#{state})
+	</insert>
+	
+	<!-- 更新订单 -->
+	<update id="updateOrder" parameterType="com.aspire.bpom.bean.OrderPO">
+		update t_order set STATE=#{state},PAY_TIME=sysdate，REQUEST_ID=#{requestId},PAY_STATUS=#{payStatus}
+		where ORDER_ID = #{orderId}
+	</update>
+	
+		<!-- 查询订单信息 -->
+	<select id="getOrderById" resultMap="OrderMap" parameterType="string">
+		select ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,STATE
+		from T_ORDER t where
+		1 = 1
+		<if test="orderId !=null">
+			and t.ORDER_ID = #{orderId}
+		</if>
+		<if test="tradeId !=null">
+			and t.TRADE_ID = #{tradeId}
+		</if>
+		<if test="requestId !=null">
+			and t.REQUEST_ID = #{requestId}
+		</if>
+	</select>
+	
+<select id="findTOrderById" resultType="com.aspire.bpom.bean.OrderPO" parameterType="String">
+   select 
+    	id,
+		to_char(orderTime,'yyyyMMdd HH24:mi:ss') orderTime,
+		requestId,
+		systemCode,
+		servPltfmCode,
+		payWay,
+		PayOrganization,
+		payType,
+		ipAddress,
+		callbackUrl,
+		tradeId,
+		userId,
+		merchantName,
+		productId,
+		productName,
+		productDesc,
+		channelId,
+		amount,
+		reserved1,
+		productURL,
+		contractCode,
+		wxOpenid,
+		wxEntrustPay,
+		to_char(payTime,'yyyyMMdd HH24:mi:ss') payTime,
+		payStatus,
+		state
+    from t_order where id=#{id}
+</select>
+</mapper>

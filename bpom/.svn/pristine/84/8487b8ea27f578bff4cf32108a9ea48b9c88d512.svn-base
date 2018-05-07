@@ -1,0 +1,15 @@
+######\u6570\u636E\u5E93\u8FDE\u63A5\u6C60\u76F8\u5173#######
+jdbc.dbtype=oracle
+jdbc.driver=oracle.jdbc.OracleDriver
+jdbc.initialSize=5
+jdbc.minIdle=10
+jdbc.maxActive=20
+jdbc.maxIdle=20
+jdbc.connectionProperties=config.decrypt=true;oracle.net.encryption_client=REQUESTED;oracle.net.encryption_types_client=(AES128)
+druid.slowSqlMillis=1000
+
+######CSSP\u6570\u636E\u5E93\u8FDE\u63A5\u6C60\u76F8\u5173#######
+jdbc.url=jdbc:oracle:thin:@10.12.3.223:1521:DB223
+jdbc.username=bpom_usr
+jdbc.password=eJMJA5eELWe7R8IUqaoS4GOCPUpLruLM5On1naqDAMEqc1IyPY4oshz4W/gETWcJ53yltH4z9rYpF7vLEMhCTg==
+

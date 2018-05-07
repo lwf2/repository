@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aspire.bpom.dao.OrderDao">
+	<resultMap type="com.aspire.bpom.bean.OrderPO" id="OrderMap">
+		<result property="orderId" column="ORDER_ID" />
+		<result property="orderTime" column="ORDER_TIME" />
+		<result property="requestId" column="REQUEST_ID" />
+		<result property="systemCode" column="SYSTEM_CODE" />
+		<result property="servPltfmCode" column="SERVPLTFM_CODE" />
+		<result property="payWay" column="PAY_WAY" />
+		<result property="payOrganization" column="PAY_ORGANIZATION" />
+		<result property="payType" column="PAY_TYPE" />
+		<result property="ipAddress" column="IP_ADDRESS" />
+		<result property="callbackUrl" column="CALLBACK_URL" />
+		<result property="outOrderId" column="OUT_ORDER_ID" />
+		<result property="tradeId" column="TRADE_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="merchantName" column="MERCHANT_NAME" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productDesc" column="PRODUCT_DESC" />
+		<result property="channelId" column="CHANNEL_ID" />
+		<result property="amount" column="AMOUNT" />
+		<result property="reserved1" column="RESERVED1" />
+		<result property="productURL" column="PRODUCT_URL" />
+		<result property="contractCode" column="CONTRACT_CODE" />
+		<result property="wxOpenid" column="WXOPEN_ID" />
+		<result property="payTime" column="PAY_TIME" />
+		<result property="payStatus" column="PAY_STATUS" />
+		<result property="operateTime" column="OPERATE_TIME" />
+		<result property="refundDesc" column="REFUND_DESC" />
+		<result property="state" column="STATE" />
+		
+	</resultMap>
+	
+		<!-- 保存订单 -->
+	<insert id="inserOrder" parameterType="com.aspire.bpom.bean.OrderPO">
+		insert into
+		t_order(ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,OUT_ORDER_ID,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,OPERATE_TIME,REFUND_DESC,STATE)
+		values(#{orderId},to_date(#{orderTime},'yyyy-mm-dd hh24:mi:ss'),#{requestId,jdbcType=NULL},#{systemCode},#{servPltfmCode},#{payWay},#{payOrganization},
+		#{payType},#{ipAddress},#{callbackUrl,jdbcType=NULL},#{outOrderId},#{tradeId},#{userId},#{merchantName,jdbcType=NULL},#{productId},
+		#{productName},#{productDesc,jdbcType=NULL},#{channelId,jdbcType=NULL},#{amount},#{reserved1,jdbcType=NULL},#{productURL,jdbcType=NULL}
+		,#{contractCode,jdbcType=NULL},#{wxOpenid,jdbcType=NULL},to_date(#{payTime,jdbcType=NULL},'yyyy-mm-dd hh24:mi:ss'),#{payStatus,jdbcType=NULL},sysdate,
+		#{refundDesc,jdbcType=NULL},#{state})
+	</insert>
+	
+		<!-- 保存订单流水 -->
+	<insert id="inserOrderHis" parameterType="com.aspire.bpom.bean.OrderPO">
+		insert into
+		t_order_his(ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,OUT_ORDER_ID,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,OPERATE_TIME,REFUND_DESC,STATE)
+		values(#{orderId},to_date(#{orderTime},'yyyy-mm-dd hh24:mi:ss'),#{requestId,jdbcType=NULL},#{systemCode},#{servPltfmCode},#{payWay},#{payOrganization},
+		#{payType},#{ipAddress},#{callbackUrl,jdbcType=NULL},#{outOrderId},#{tradeId},#{userId},#{merchantName,jdbcType=NULL},#{productId},
+		#{productName},#{productDesc,jdbcType=NULL},#{channelId,jdbcType=NULL},#{amount},#{reserved1,jdbcType=NULL},#{productURL,jdbcType=NULL}
+		,#{contractCode,jdbcType=NULL},#{wxOpenid,jdbcType=NULL},to_date(#{payTime,jdbcType=NULL},'yyyy-mm-dd hh24:mi:ss'),#{payStatus,jdbcType=NULL},sysdate,
+		#{refundDesc,jdbcType=NULL},#{state})
+	</insert>
+	
+	<!-- 更新订单 -->
+	<update id="updateOrder" parameterType="com.aspire.bpom.bean.OrderPO">
+		update t_order set
+		OPERATE_TIME = sysdate
+		<if test="requestId !=null">
+		,REQUEST_ID=#{requestId}
+		</if>
+		<if test="state !=null">
+			,STATE=#{state}
+		</if>
+		<if test="payStatus !=null">
+		,PAY_STATUS=#{payStatus}
+		</if>
+		<if test="payTime !=null">
+		,PAY_TIME=to_date(#{payTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		where 1=1
+		<if test="tradeId !=null">
+			and TRADE_ID = #{tradeId}
+		</if>
+	</update>
+	
+		<!-- 查询订单信息 -->
+	<select id="getOrderById" resultMap="OrderMap" parameterType="string">
+		select ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,OUT_ORDER_ID,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,STATE,OPERATE_TIME,REFUND_DESC
+		from T_ORDER t where
+		1 = 1
+		<if test="tradeId !=null">
+			and t.TRADE_ID = #{tradeId}
+		</if>
+		<if test="requestId !=null">
+			and t.REQUEST_ID = #{requestId}
+		</if>
+	</select>
+	
+	<!--保存退款单信息 -->
+	<update id="insertRefund" parameterType="com.aspire.bpom.bean.OrderPO"> 
+	  update T_ORDER set operate_time=SYSDATE,state=3
+	    <if test="outOrderId !=null and outOrderId!=''">
+        ,OUT_ORDER_ID=#{outOrderId}
+        </if>
+        <if test="refundDesc !=null and refundDesc!=''">
+        ,refund_desc=#{refundDesc}
+        </if>
+        <if test="payStatus !=null and payStatus!=''">
+        ,pay_status=#{payStatus}
+        </if>
+        
+     where trade_id=#{tradeId}
+	</update>
+	
+	<!--保存退款单流水信息 -->
+	<update id="insertRefundHis" parameterType="com.aspire.bpom.bean.OrderPO"> 
+	  update T_ORDER_HIS set operate_time=SYSDATE,state=3
+	    <if test="refundDesc !=null and refundDesc!=''">
+        ,refund_desc=#{refundDesc}
+        </if>
+        <if test="payStatus !=null and payStatus!=''">
+        ,pay_status=#{payStatus}
+        </if>  
+     where trade_id=#{tradeId}
+	</update>
+	
+	<!-- 修改退款单状态 -->
+	<update id="updateRefundStatus" parameterType="com.aspire.bpom.bean.OrderPO">
+		update T_ORDER set operate_time=SYSDATE
+        <if test="payStatus !=null and payStatus!=''">
+        ,pay_status=#{payStatus}
+        </if>  
+     where trade_id=#{tradeId}
+	</update>
+	
+	<!--定时查询结算单（每天13点查询昨天0点到24点） -->
+	<select id="timingQuerySettle"  resultType="com.aspire.bpom.bean.SettlePO">
+	   select   t.OUT_ORDER_ID orderId,
+			  	t.TRADE_ID tradeId,
+			  	t.USER_ID userId,
+			  	t.PRODUCT_ID productId,
+			  	t.CHANNEL_ID channelId,
+			  	t.AMOUNT totalFee,
+              	CASE WHEN t.PAY_STATUS='20' THEN 'P'
+                   WHEN t.PAY_STATUS='70' THEN 'R'
+                   ELSE NULL END transType,
+              	t.REQUEST_ID requestId,
+              	to_char(t.ORDER_TIME ,'YYYYMMDDHH24MISS') submitTime,
+			  	t.PAY_ORGANIZATION payOrganization,
+			  	t.PAY_WAY payWap,
+			  	t.PAY_TYPE payType,
+			  	CASE WHEN t.PAY_STATUS='20' THEN to_char(t.PAY_TIME,'YYYYMMDDHH24MISS')
+                   WHEN t.PAY_STATUS='70' THEN to_char(t.OPERATE_TIME,'YYYYMMDDHH24MISS')
+                   ELSE NULL END payTime 
+		from    t_order_his t
+		where   ( t.PAY_STATUS = '20'
+        	 	  AND trunc(t.PAY_TIME) = trunc(SYSDATE)-1        	 
+        	 	) or 
+        	 	( t.PAY_STATUS = '70'         	 
+        	 	  AND trunc(t.OPERATE_TIME) = trunc(SYSDATE)-1)
+     	order by t.ORDER_TIME DESC
+	</select>
+	
+
+	<!-- 查询订单流水表payStatus为20或者60的记录 -->
+	<select id="getOrderInfo" resultMap="OrderMap">
+		select OUT_ORDER_ID,TRADE_ID,USER_ID,PRODUCT_ID,CHANNEL_ID,AMOUNT,PAY_STATUS,REQUEST_ID
+		,ORDER_TIME,PAY_ORGANIZATION,PAY_WAY,PAY_TYPE,PAY_TIME,OPERATE_TIME	from t_order_his t where 
+		t.PAY_STATUS = '20' or t.PAY_STATUS = '60'
+	</select>
+	
+	<!-- 根据外部订单ID查询数据 -->
+	<select id="getOrderByOutOrderId" parameterType="java.lang.String" resultMap="OrderMap">			
+	    SELECT
+	        OUT_ORDER_ID,
+	        USER_ID,
+	        PRODUCT_ID,
+	        CHANNEL_ID,
+			PAY_STATUS
+		FROM
+			T_ORDER
+		WHERE
+			TRADE_ID = #{value}
+	</select>
+	
+	<!-- 订单对账批量更新订单表 -->
+	<update id="batchUpdateOrder">
+	    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+	        UPDATE T_ORDER
+	        <set>
+	           <if test="item.servPltfmCode != null and item.servPltfmCode != '' ">
+			      SERVPLTFM_CODE = #{item.servPltfmCode},
+			   </if>
+	           <if test="item.transType != null and item.transType != '' ">
+			      PAY_STATUS = #{item.transType},			       
+			   </if>
+	           <if test="item.requestId != null and item.requestId != '' ">
+			      REQUEST_ID = #{item.requestId},
+			   </if>
+	           <if test="item.submitTime != null and item.submitTime != '' ">
+			      ORDER_TIME = to_date(#{item.submitTime},'yyyy-mm-dd hh24:mi:ss'),
+			   </if>
+	           <if test="item.payOrganization != null and item.payOrganization != '' ">
+			      PAY_ORGANIZATION = #{item.payOrganization},
+			   </if>
+	           <if test="item.payWap != null and item.payWap != '' ">
+			      PAY_WAY = #{item.payWap},
+			   </if>
+	           <if test="item.payType != null and item.payType != '' ">
+			      PAY_TYPE = #{item.payType},
+			   </if>
+	           <if test="item.totalFee != null and item.totalFee != '' ">
+			      AMOUNT = #{item.totalFee},
+			   </if>
+			   <if test="item.payTime != null and item.payTime != '' and item.transType == 20 ">
+			      PAY_TIME = to_date(#{item.payTime},'yyyy-mm-dd hh24:mi:ss'),
+			   </if>                    
+			   <if test="item.payTime != null and item.payTime != '' and item.transType == 70 ">
+			      OPERATE_TIME = to_date(#{item.payTime},'yyyy-mm-dd hh24:mi:ss'),
+			   </if>                    
+	        </set> 
+			WHERE
+				TRADE_ID = #{item.orderId}
+	    </foreach>
+	</update>
+	
+	<!-- 根据外部订单ID批量查询订单表中已更新的数据 -->
+	<select id="batchQueryOrder" resultMap="OrderMap">
+	    SELECT
+			ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+				,OUT_ORDER_ID,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+				WXOPEN_ID,PAY_TIME,PAY_STATUS,REFUND_DESC,STATE
+		FROM
+			T_ORDER
+		WHERE
+			TRADE_ID IN
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+		    #{item.orderId}
+		</foreach>
+	</select>	
+	
+	<!-- 订单对账批量新增订单历史表 -->
+	<insert id="batchAddOrderHis">
+	  INSERT INTO T_ORDER_HIS (
+		ORDER_ID,ORDER_TIME,REQUEST_ID,SYSTEM_CODE,SERVPLTFM_CODE,PAY_WAY,PAY_ORGANIZATION,PAY_TYPE,IP_ADDRESS,CALLBACK_URL
+		,OUT_ORDER_ID,TRADE_ID,USER_ID,MERCHANT_NAME,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,AMOUNT,RESERVED1,PRODUCT_URL,CONTRACT_CODE,
+		WXOPEN_ID,PAY_TIME,PAY_STATUS,OPERATE_TIME,REFUND_DESC,STATE  
+	  )
+	  <foreach collection="list" item="item" index="index" separator="union all">
+	    select 
+		    #{item.orderId},to_date(#{item.orderTime},'yyyy-mm-dd hh24:mi:ss'),
+		    #{item.requestId,jdbcType=NULL},#{item.systemCode},
+		    #{item.servPltfmCode},#{item.payWay},#{item.payOrganization},
+			#{item.payType},#{item.ipAddress},#{item.callbackUrl,jdbcType=NULL},#{item.outOrderId},#{item.tradeId},#{item.userId},#{item.merchantName,jdbcType=NULL},#{item.productId},
+			#{item.productName},#{item.productDesc,jdbcType=NULL},
+			#{item.channelId,jdbcType=NULL},#{item.amount},
+			#{item.reserved1,jdbcType=NULL},#{item.productURL,jdbcType=NULL},
+			#{item.contractCode,jdbcType=NULL},#{item.wxOpenid,jdbcType=NULL},
+			to_date(#{item.payTime,jdbcType=NULL},'yyyy-mm-dd hh24:mi:ss'),
+			#{item.payStatus,jdbcType=NULL},sysdate,
+			#{item.refundDesc,jdbcType=NULL},#{item.state}
+		from dual 
+	  </foreach>
+	</insert>
+	
+	<!-- 查询订单对账数据 -->
+	<select id="getOrderListByTradeId" parameterType="java.util.Set" resultMap="OrderMap">
+		SELECT
+			SERVPLTFM_CODE,
+			OUT_ORDER_ID,
+			PAY_STATUS,
+			TRADE_ID,
+			to_char(ORDER_TIME ,'YYYYMMDDHH24MISS') ORDER_TIME,
+			PAY_ORGANIZATION,
+			PAY_WAY,
+			PAY_TYPE,
+			AMOUNT,
+			to_char(PAY_TIME ,'YYYYMMDDHH24MISS') PAY_TIME,
+			to_char(OPERATE_TIME ,'YYYYMMDDHH24MISS') OPERATE_TIME
+		FROM
+			T_ORDER
+		WHERE
+			TRADE_ID IN
+		<foreach collection="set" index="index" item="item" open="(" close=")" separator=",">
+		    #{item}
+		</foreach>		
+	</select>
+</mapper>

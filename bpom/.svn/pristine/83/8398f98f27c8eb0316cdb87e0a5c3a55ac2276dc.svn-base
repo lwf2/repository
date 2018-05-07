@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="5" packages="com.aspire.bpom.extensions.log4j">
+    <properties>
+        <property name="LOG_HOME">/home/d139/bin/bpom_tomcat/logs/bpom</property>
+        <property name="FILE_PRE">bpom</property>
+        <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %level{lowerCase=true} [%t] [%-8c{1}:%L] - %m%n</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN}" />
+        </Console>
+        <RollingRandomAccessFile name="File" fileName="${LOG_HOME}/${FILE_PRE}.log"
+            filePattern="${LOG_HOME}/%d{yyyy-MM}/${FILE_PRE}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+    	<logger name="com.aspire.bpom" level="info" additivity="false">
+            <AppenderRef ref="File" />
+             <AppenderRef ref="Console" /> 
+        </logger>
+        <logger name="org.springframework" level="error" additivity="false">
+            <AppenderRef ref="File" />    
+             <AppenderRef ref="Console" /> 
+        </logger>
+        <Root level="info">
+            <AppenderRef ref="File" />
+             <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>

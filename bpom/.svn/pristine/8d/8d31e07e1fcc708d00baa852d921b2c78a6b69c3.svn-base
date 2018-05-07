@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+     <!-- 数据源配置 -->
+	<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 默认值参考 https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8 -->
+        <property name="dbType" value="${jdbc.dbtype}" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="filters" value="config" />
+      	<property name="connectionProperties" value="${jdbc.connectionProperties}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="1000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="9000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="60000" />
+
+        <property name="validationQuery" value="SELECT 0 FROM DUAL" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="proxyFilters">
+            <list>
+                <ref bean="log-filter" />
+                <ref bean="stat-filter" />
+                <ref bean="wall-filter" />
+            </list>
+        </property>
+    </bean>
+    <!-- 开启Druid的监控统计功能 -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="mergeSql" value="true" />
+        <property name="logSlowSql" value="true" />
+        <property name="slowSqlMillis" value="${druid.slowSqlMillis}" />
+    </bean>
+
+    <!-- 开启Druid的SQL注入防御功能 -->
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <!-- 只通过日志观察是否存在违规的情况 -->
+        <property name="logViolation" value="false" />
+        <property name="throwException" value="false" />
+
+        <property name="config" ref="wall-filter-config" />
+        <property name="dbType" value="${jdbc.dbtype}" />
+    </bean>
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+        <!-- 默认配置见 https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE-wallfilter -->
+      <property name="dir" value="META-INF/druid/wall/${jdbc.dbtype}" />
+        <!-- 拦截配置－语句执行 -->
+        <property name="selectIntoAllow" value="false" />
+        <property name="callAllow" value="false" />
+        <property name="setAllow" value="false" />
+        <property name="truncateAllow" value="false" />
+        <property name="createTableAllow" value="false" />
+        <property name="alterTableAllow" value="false" />
+        <property name="dropTableAllow" value="false" />
+        <property name="useAllow" value="false" />
+        <property name="describeAllow" value="false" />
+        <property name="showAllow" value="false" />
+        <!-- 拦截配置－永真条件 -->
+        <property name="deleteWhereNoneCheck" value="true" />
+        <property name="updateWhereNoneCheck" value="true" />
+        <property name="conditionLikeTrueAllow" value="false" />
+        <!-- 其他拦截配置 -->
+        <property name="selectUnionCheck" value="false" />
+        <property name="selectMinusCheck" value="false" />
+        <property name="selectExceptCheck" value="false" />
+        <property name="selectIntersectCheck" value="false" />
+        <property name="mustParameterized" value="true" />
+        <property name="conditionOpBitwseAllow" value="false" />
+        <property name="constArithmeticAllow" value="false" />
+    </bean>
+
+    <!-- 输出JDBC执行的日志 -->
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="statementExecutableSqlLogEnable" value="true" />
+    </bean>
+	
+</beans>
+
+
+
+
+

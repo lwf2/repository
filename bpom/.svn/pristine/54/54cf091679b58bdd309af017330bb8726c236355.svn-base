@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aspire.bpom.dao.TUnsubscribeDao">
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.aspire.bpom.bean.TUnsubscribePO">
+insert into 
+t_unsubscribe(
+        id,
+        orderid,
+        refunddate,
+        refundamount,
+        refunddesc,
+        refundstatus,
+        state)
+values (#{id},#{orderId},SYSDATE,#{refundAmount},#{refundDesc},#{refundStatus},0)
+</insert>
+
+<!-- 修改退款单状态 -->
+<update id="updateStatus" parameterType="com.aspire.bpom.bean.TUnsubscribePO"> 
+	update t_unsubscribe set refunddate=SYSDATE,refundstatus=#{refundStatus}
+	where id=#{id}
+</update>
+
+<!-- 删除退款单记录 -->
+<delete id="" parameterType="String">
+  delete from t_unsubscribe where id=#{id}
+</delete>
+
+<!--根据订单id查询退款单信息  -->
+<select id="findByOrderId" parameterType="String"  resultType="com.aspire.bpom.bean.TUnsubscribePO">
+  select id,
+         orderid,
+         to_char(refunddate,'yyyyMMdd HH24:mi:ss') refunddate,
+         refundamount,
+         refunddesc,
+         refundstatus
+   from  t_unsubscribe    
+   where orderid=#{orderId}     
+</select>
+
+
+
+</mapper>

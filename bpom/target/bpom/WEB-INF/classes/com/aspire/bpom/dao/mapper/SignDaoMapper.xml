@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aspire.bpom.dao.SignDao">
+	<resultMap type="com.aspire.bpom.bean.SignPO" id="SignMap">
+		<result property="contractCode" column="CONTRACT_CODE" />
+		<result property="contractId" column="CONTRACT_ID" />
+		<result property="signedTime" column="SIGNED_TIME" />
+		<result property="planId" column="PLAN_ID" />
+		<result property="displayName" column="DISPLAY_NAME" />
+		<result property="expiredTime" column="EXPIRED_TIME" />
+		<result property="systemCode" column="SYSTEM_CODE" />
+		<result property="servPltfmCode" column="SERVPLTFM_CODE" />
+		<result property="userId" column="USER_ID" />
+		<result property="openId" column="OPEN_ID" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productDesc" column="PRODUCT_DESC" />
+		<result property="channelId" column="CHANNEL_ID" />
+		<result property="reserved1" column="RESERVED1" />
+		<result property="productURL" column="PRODUCT_URL" />
+		<result property="unSignTime" column="UNSIGN_TIME" />
+		<result property="unSignMode" column="UNSIGN_MODE" />
+		<result property="unSignMemo" column="UNSIGN_MEMO" />
+		<result property="state" column="STATE" />
+	</resultMap>
+	
+			<!-- 保存签约信息 -->
+	<insert id="insertSign" parameterType="com.aspire.bpom.bean.SignPO">
+		insert into
+		t_wx_contract(CONTRACT_CODE,CONTRACT_ID,SIGNED_TIME,PLAN_ID,DISPLAY_NAME,EXPIRED_TIME,SYSTEM_CODE,SERVPLTFM_CODE,USER_ID,OPEN_ID
+		,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,RESERVED1,PRODUCT_URL,UNSIGN_TIME,UNSIGN_MODE,UNSIGN_MEMO,STATE)
+		values(#{contractCode},#{contractId,jdbcType=NULL},#{signedTime,jdbcType=NULL},#{planId,jdbcType=NULL},#{displayName,jdbcType=NULL},to_date(#{expiredTime},'yyyy-mm-dd hh24:mi:ss')
+		,#{systemCode},#{servPltfmCode},#{userId},#{openId,jdbcType=NULL},#{productId},#{productName},#{productDesc,jdbcType=NULL},#{channelId,jdbcType=NULL},
+		#{reserved1,jdbcType=NULL},#{productURL,jdbcType=NULL},#{unSignTime,jdbcType=NULL},#{unSignMode,jdbcType=NULL},#{unSignMemo,jdbcType=NULL},#{state})
+	</insert>
+	
+	<!-- 更新签约信息 -->
+	<update id="updateSign" parameterType="com.aspire.bpom.bean.OrderPO">
+		update T_WX_CONTRACT set STATE=#{status}
+		<if test="contractId !=null">
+			, CONTRACT_ID=#{contractId}
+		</if>
+		<if test="signedTime !=null">
+			, SIGNED_TIME=#{signedTime}
+		</if>
+		<if test="expiredTime !=null">
+			, EXPIRED_TIME=#{expiredTime}
+		</if>
+		<if test="unSignTime !=null">
+			, UNSIGN_TIME=#{unSignTime}
+		</if>
+		<if test="unSignMode !=null">
+			, UNSIGN_MODE=#{unSignMode}
+		</if>
+		<if test="unSignMemo !=null">
+			, UNSIGN_MEMO=#{unSignMemo}
+		</if>
+		where CONTRACT_CODE = #{CONTRACT_CODE}
+	</update>
+	
+		<!-- 根据签约协议号查询签约信息 -->
+	<select id="getSignByCode" resultMap="SignMap" parameterType="string">
+		select CONTRACT_CODE,CONTRACT_ID,SIGNED_TIME,PLAN_ID,DISPLAY_NAME,EXPIRED_TIME,SYSTEM_CODE,SERVPLTFM_CODE,USER_ID,OPEN_ID
+		,PRODUCT_ID,PRODUCT_NAME,PRODUCT_DESC,CHANNEL_ID,RESERVED1,PRODUCT_URL,UNSIGN_TIME,UNSIGN_MODE,UNSIGN_MEMO,STATE
+		from T_WX_CONTRACT t where
+		t.CONTRACT_CODE = #{contractCode}
+	</select>
+</mapper>

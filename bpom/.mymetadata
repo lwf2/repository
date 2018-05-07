@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="MBS"
+  id="myeclipse.1479093343131"
+  context-root="/mbs"
+  j2ee-spec="1.7"
+  archive="MBS.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
